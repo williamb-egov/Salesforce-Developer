@@ -1,0 +1,21 @@
+<aura:component >
+    <aura:attribute name="expense" type="Expense__c" />
+        <div class="{!v.expense.FiveOf9__Reimbursed__c == true ? 'alert alert-success' : 'alert alert-warning'}">
+            <a aura:id="expense" href="{!'/' + v.expense.Id}">
+            	<h3>{!v.expense.Name}</h3>
+            </a>
+            
+            <p>
+                Amount: <ui:outputNumber value="{!v.expense.FiveOf9__Amount__c}" format="0.00"/>
+            </p>
+            <p>
+                Client: <ui:outputText value="{!v.expense.FiveOf9__Client__c}"/>
+            </p>
+            <p>
+                Date: <ui:outputDateTime value="{!v.expense.FiveOf9__Date__c}"/>
+            </p>
+            <p>
+                Reimbursed? <ui:inputCheckbox value="{!v.expense.FiveOf9__Reimbursed__c}" click="{!c.update}"/>
+            </p>
+        </div>
+</aura:component>

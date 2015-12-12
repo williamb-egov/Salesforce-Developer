@@ -1,0 +1,19 @@
+<aura:component >
+  <aura:attribute name="Street" type="String"/>
+  <aura:attribute name="Street2" type="String"/>
+  <aura:attribute name="City" type="String"/>
+  <aura:attribute name="State" type="String"/>
+  <aura:attribute name="PostalCode" type="String"/>
+  <aura:attribute name="Render" type="Boolean"/>
+
+  <!-- Controller checks attributes and sets Render to true if there are any  -->
+  <aura:if isTrue="{!v.Render}">
+    <div class="address">
+      <div class="street">{!v.Street}</div>
+      <div class="street">{!v.Street2}</div>
+      <div class="city">{!v.City}</div>
+      <div class="state">{!v.State}</div>
+      <div class="zip">{!v.PostalCode}</div>
+    </div>
+  </aura:if>
+</aura:component>

@@ -1,0 +1,21 @@
+<aura:component implements="force:appHostable">
+	<aura:attribute name="num1" type="Integer" default="1" />
+	<aura:attribute name="num2" type="Integer" default="2" />
+	<aura:attribute name="sum" type="Integer" />
+	<h1>Hello World</h1>
+    <div class="container">
+        <h1>another h1 tag</h1>
+        <div class="red">I'm red</div>
+        <div class="blue">I'm blue</div>
+        <div class="green">I'm gree</div>
+
+				<div class="sum">
+					{!v.num1} + {!v.num2} = {!v.sum}
+
+					<ui:button label="Add Numbers" press="{!c.add}"/>
+				</div>
+    </div>
+</aura:component>
+
+
+<!-- yo -->

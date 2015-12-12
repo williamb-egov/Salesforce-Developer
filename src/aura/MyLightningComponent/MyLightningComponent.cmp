@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable">
+	<div class="container">
+		<h1 class="headline">Hello World</h1>
+	</div>
+</aura:component>
