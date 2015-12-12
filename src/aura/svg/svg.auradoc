@@ -1,5 +1,7 @@
 <aura:documentation>
-	<aura:description>Documentation</aura:description>
+	<aura:description>
+		<p>Stuff, things ... <strong>bold</strong></p>
+	</aura:description>
 	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
 		Example Description
 	</aura:example>
