@@ -1,0 +1,125 @@
+<project name="PAI Salesforce Build Scripts" default="DeployTo_Sandbox" basedir="." xmlns:sf="antlib:com.salesforce">
+    <property file="build.properties"/>
+    <property environment="env"/>
+
+    <!-- # These are helper functions for doing deployments.
+    You must make remove_social_post_from_profiles depend on your retrieval target,
+    the rest depend on the other. It's also helpful to change the metadata.root here before deploying
+    as we will be erasing non-migratble files.
+    -->
+
+    <target name="cleanup_deployment_root">
+      <echo message="cleaning ${deployment.root}" />
+      <delete dir="${deployment.root}" />
+      <echo message="moving ${metadata.root} to ${deployment.root}" />
+      <copy todir="${deployment.root}">
+        <fileset dir="${metadata.root}"/>
+      </copy>
+    </target>
+
+
+    <!--
+      Some people, when confronted with a problem, think "I know, I'll use regular expressions." Now they have two problems.
+      -Jamie Zawinski
+    -->
+    <target name="modify_profiles" depends="cleanup_deployment_root">
+         <echo message="updating profiles to remove references in ${deployment.root}..."/>
+         <replaceregexp match="^\s+&lt;layoutAssignments&gt;\n\s+&lt;layout&gt;SocialPost-Social Post Layout&lt;/layout&gt;\n\s+&lt;/layoutAssignments&gt;\s*$" replace="" flags="gm" byline="false">
+             <fileset dir="${deployment.root}\profiles" includes="**/*.profile" />
+         </replaceregexp>
+         <replaceregexp match="^\s+&lt;tabVisibilities&gt;\n\s+&lt;tab&gt;standard-SocialPersona&lt;/tab&gt;\n\s+&lt;visibility&gt;DefaultOff&lt;/visibility&gt;\n\s+&lt;/tabVisibilities&gt;\s*$" replace="" flags="gm" byline="false">
+             <fileset dir="${deployment.root}\profiles" includes="**/*.profile" />
+         </replaceregexp>
+     </target>
+
+     <target name="delete_layouts" depends="modify_profiles">
+         <echo message="deleting Social-Post related files from ${deployment.root}..."/>
+         <delete file="${deployment.root}\layouts\SocialPost-Social Post Layout.layout"/>
+     </target>
+
+     <target name="delete_workflows" depends="delete_layouts">
+         <echo message="deleting non-migratable workflows from ${deployment.root}..."/>
+         <delete file="${deployment.root}\workflows\EmailMessage.workflow"/>
+         <delete file="${deployment.root}\workflows\Question.workflow"/>
+         <delete file="${deployment.root}\workflows\Reply.workflow"/>
+         <delete file="${deployment.root}\workflows\SocialPost.workflow"/>
+         <delete file="${deployment.root}\workflows\ExternalEventMapping.workflow"/>
+     </target>
+
+
+    <!-- # Deployment Targets  -->
+    <!-- # My Sandbox Environment  -->
+    <target name="DeployTo_Sandbox" depends="cleanup_deployment_root, modify_profiles, delete_layouts, delete_workflows">
+      <sf:deploy  username="${sandbox.username}"
+                  password="${sandbox.password}${sandbox.securityToken}"
+                  serverurl="${sandbox.serverurl}"
+                  deployRoot="${deployment.root}">
+      </sf:deploy>
+    </target>
+
+    <target name="RetrieveFrom_Sandbox">
+      <sf:retrieve  username="${sandbox.username}"
+                    password="${sandbox.password}${sandbox.securityToken}"
+                    serverurl="${sandbox.serverurl}"
+                    retrieveTarget="${metadata.root}"
+                    unpackaged="package.xml">
+      </sf:retrieve>
+    </target>
+
+
+    <!-- # PAI's Dev Sandbox -->
+    <target name="DeployTo_paiDev">
+      <sf:deploy  username="${paiDev.username}"
+                  password="${paiDev.password}${paiDev.securityToken}"
+                  serverurl="${paiDev.serverurl}"
+                  deployRoot="${metadata.root}">
+      </sf:deploy>
+    </target>
+
+    <target name="RetrieveFrom_paiDev">
+      <sf:retrieve  username="${paiDev.username}"
+                    password="${paiDev.password}${paiDev.securityToken}"
+                    serverurl="${paiDev.serverurl}"
+                    retrieveTarget="${metadata.root}"
+                    unpackaged="package.xml">
+      </sf:retrieve>
+    </target>
+
+
+    <!-- # PAI's Staging Sandbox -->
+    <target name="DeployTo_paiStaging">
+      <sf:deploy  username="${paiStaging.username}"
+                  password="${paiStaging.password}${paiStaging.securityToken}"
+                  serverurl="${paiStaging.serverurl}"
+                  deployRoot="${metadata.root}">
+      </sf:deploy>
+    </target>
+
+    <target name="RetrieveFrom_paiStaging">
+      <sf:retrieve  username="${paiStaging.username}"
+                    password="${paiStaging.password}${paiStaging.securityToken}"
+                    serverurl="${paiStaging.serverurl}"
+                    retrieveTarget="${metadata.root}"
+                    unpackaged="package.xml">
+      </sf:retrieve>
+    </target>
+
+
+    <!-- # PAI's Production Envrionment -->
+    <target name="DeployTo_paiProduction">
+      <sf:deploy  username="${paiProduction.username}"
+                  password="${paiProduction.password}${paiProduction.securityToken}"
+                  serverurl="${paiProduction.serverurl}"
+                  deployRoot="${metadata.root}">
+      </sf:deploy>
+    </target>
+
+    <target name="RetrieveFrom_paiProduction">
+      <sf:retrieve  username="${paiProduction.username}"
+                    password="${paiProduction.password}${paiProduction.securityToken}"
+                    serverurl="${paiProduction.serverurl}"
+                    retrieveTarget="${metadata.root}"
+                    unpackaged="package.xml">
+      </sf:retrieve>
+    </target>
+</project>
