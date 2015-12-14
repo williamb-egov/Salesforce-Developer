@@ -1,0 +1,17 @@
+<aura:component>
+    <!-- Attributes -->
+    <!-- Rendered HTML -->
+    <div class="registration-form-wrapper">
+        <ui:inputText label="First Name" placeholder="John"></ui:inputText>
+        <ui:inputText label="Last Name" placeholder="Doe"></ui:inputText>
+        <ui:inputSelect label="Salutation">
+            <ui:inputSelectOption text="Please Select One" label="Please Select One" value="true"></ui:inputSelectOption>
+            <ui:inputSelectOption text="Mr." label="Mr"></ui:inputSelectOption>
+            <ui:inputSelectOption text="Dr." label="Dr."></ui:inputSelectOption>
+            <ui:inputSelectOption text="Mrs." label="Mrs."></ui:inputSelectOption>
+            <ui:inputSelectOption text="Ms." label="Ms."></ui:inputSelectOption>
+        </ui:inputSelect>
+        <ui:inputPhone label="Phone Number" placeholder="123.456.7890"></ui:inputPhone>
+        <ui:button label="Submit"></ui:button>
+    </div>
+</aura:component>

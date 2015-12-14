@@ -1,0 +1,33 @@
+<aura:component>
+    <!-- Attributes -->
+    <aura:attribute name="DayOfTheWeek" type="String"/>
+
+    <!-- Rendered HTML -->
+    <div class="motd-main">
+        <p>
+            <aura:if isTrue="{!v.DayOfTheWeek == 'Monday'}">
+                Today is Monday
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.DayOfTheWeek == 'Tuesday'}">
+                        Today is Tuesday
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.DayOfTheWeek == 'Wednesday'}">
+                                Today is Wednesday
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.DayOfTheWeek == 'Thursday'}">
+                                        Today is Thursday
+                                        <aura:set attribute="else">
+                                            <aura:if isTrue="{!v.DayOfTheWeek == 'Friday'}">
+                                                Today is Friday
+                                            </aura:if>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </aura:set>
+            </aura:if>
+        </p>
+    </div>
+</aura:component>
