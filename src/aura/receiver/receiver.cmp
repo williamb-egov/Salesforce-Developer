@@ -1,0 +1,8 @@
+<aura:component>
+    <!-- Attributes -->
+    <aura:attribute name="myText" type="String" default="None"></aura:attribute>
+    <!-- Events -->
+    <aura:handler event="c.message" action="{!c.answer}"></aura:handler>
+    <!-- Rendered HTML -->
+    Message: {!v.myText}
+</aura:component>

@@ -1,0 +1,8 @@
+<aura:component>
+    <!-- Attributes -->
+    <!-- Events -->
+    <aura:registerEvent name="message" type="c:message"></aura:registerEvent>
+    <!-- Rendered HTML -->
+    <ui:button label="1" press="{!c.send}"></ui:button>
+    <ui:button label="2" press="{!c.send}"></ui:button>
+</aura:component>
